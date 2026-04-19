@@ -1,1 +1,50 @@
-<p>footer works!</p>
+<footer class="footer">
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <div class="col brand-col">
+        <a routerLink="/" class="logo">
+          <span class="logo-icon">💼</span>
+          <span class="logo-text">JobBoard</span>
+        </a>
+        <p>Find your dream remote job from top companies worldwide. Join thousands of professionals working remotely.</p>
+      </div>
+
+      <div class="col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a routerLink="/">Home</a></li>
+          <li><a routerLink="/jobs">Browse Jobs</a></li>
+          <li><a routerLink="/login">Login</a></li>
+          <li><a routerLink="/register">Register</a></li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <h4>Categories</h4>
+        <ul>
+          <li><a routerLink="/jobs">Software Development</a></li>
+          <li><a routerLink="/jobs">Design</a></li>
+          <li><a routerLink="/jobs">Marketing</a></li>
+          <li><a routerLink="/jobs">Customer Service</a></li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <h4>Contact</h4>
+        <ul>
+          <li>📧 hello&#64;jobboard.com</li>
+          <li>📞 +1 234 567 890</li>
+          <li>🌍 Remote First</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="copyright">
+      &copy; {{ currentYear }} JobBoard. All rights reserved. Built with Angular 19.
+    </div>
+
+  </div>
+</footer>
