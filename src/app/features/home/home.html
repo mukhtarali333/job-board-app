@@ -1,1 +1,138 @@
-<p>home works!</p>
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <h1>Got Talent?<br>Meet Opportunity</h1>
+      <p class="sub">Company reviews. Salaries. Interviews. Jobs.</p>
+
+      <form class="search-box" (ngSubmit)="onSearch()">
+        <div class="input-group">
+          <span class="icon">🔍</span>
+          <input type="text" placeholder="Job title or keywords"
+                 [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)" name="q">
+        </div>
+        <div class="input-group divider">
+          <span class="icon">📍</span>
+          <input type="text" placeholder="All Location" name="loc">
+        </div>
+        <button type="submit" class="btn-primary">Search</button>
+      </form>
+
+      <p class="popular">
+        <strong>Popular Searches:</strong>
+        <a href="#">Data Management</a>,
+        <a href="#">Marketing Manager</a>,
+        <a href="#">Customer Support</a>
+      </p>
+
+      <div class="trusted">
+        <p>Trusted by leading brands and startups</p>
+        <div class="brands">
+          <span>◼ Square</span>
+          <span>◆ Notion</span>
+          <span>⚫ GitHub</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-image">👩‍💻</div>
+      <div class="floating alert">🔔 Job Alert Subscribe</div>
+      <div class="floating candidates">👥 5k+ candidates get job</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE CARDS -->
+<section class="features">
+  <div class="container feature-grid">
+    <div class="feature-card peach">
+      <div class="feature-text">
+        <h3>For Employers</h3>
+        <p>Find professionals from around the world and across all skills.</p>
+        <a routerLink="/post-job" class="btn-primary">Post jobs for Free</a>
+      </div>
+      <div class="feature-illus">🧑‍💼</div>
+    </div>
+    <div class="feature-card mint">
+      <div class="feature-text">
+        <h3>For Candidate</h3>
+        <p>Build your professional profile, find new job opportunities.</p>
+        <a routerLink="/register" class="btn-primary">Upload your CV</a>
+      </div>
+      <div class="feature-illus">🙋‍♀️</div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Popular category</h2>
+        <p class="muted">2020 jobs live – 293 added today.</p>
+      </div>
+      <a href="#" class="link">View all categories →</a>
+    </div>
+
+    <div class="category-grid">
+      @for (cat of categories.slice(0, 4); track cat.slug) {
+        <div class="category-card" (click)="onCategoryClick(cat.slug)">
+          <div class="cat-icon">{{ cat.icon }}</div>
+          <h4>{{ cat.name }}</h4>
+          <span class="job-count">16 jobs</span>
+          <p class="muted">Explore open roles in {{ cat.name }}.</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- LATEST JOBS -->
+<section class="jobs">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Latest jobs</h2>
+        <p class="muted">2020 jobs live – 293 added today.</p>
+      </div>
+      <a routerLink="/jobs" class="link">View all jobs →</a>
+    </div>
+
+    @if (isLoading()) {
+      <div class="state">Loading jobs...</div>
+    } @else if (hasError()) {
+      <div class="state error">Failed to load jobs. Please try again.</div>
+    } @else {
+      <div class="jobs-grid">
+        @for (job of featuredJobs(); track job.id) {
+          <article class="job-card" (click)="onJobClick(job.id)">
+            <div class="job-head">
+              <div class="company-logo">{{ job.company_name.charAt(0) }}</div>
+              <div class="job-info">
+                <h4>{{ job.title }}</h4>
+                <p class="muted">by {{ job.company_name }} in {{ job.category }}</p>
+              </div>
+              <span class="heart">♡</span>
+            </div>
+            <div class="job-meta">
+              <span class="tag">{{ formatJobType(job.job_type) }}</span>
+              <span>📍 {{ job.candidate_required_location }}</span>
+              @if (job.salary) { <span>💰 {{ job.salary }}</span> }
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container cta-inner">
+    <h2>Ready to find your dream job?</h2>
+    <p>Join thousands of professionals already hired through JobBoard.</p>
+    <a routerLink="/jobs" class="btn-primary large">Browse all jobs</a>
+  </div>
+</section>

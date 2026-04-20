@@ -1,24 +1,27 @@
 .footer {
-  background: #1e293b;
-  color: #94a3b8;
-  padding: 60px 0 20px;
-  margin-top: 80px;
+  background: var(--ink);
+  color: var(--stone-light);
+  padding: 80px 0 32px;
+  margin-top: 0;
+  border-top: 1px solid var(--ink);
 
   .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 32px;
   }
 
   .footer-grid {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 40px;
+    gap: 60px;
+    margin-bottom: 60px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--ink-soft);
 
     @media (max-width: 968px) {
       grid-template-columns: 1fr 1fr;
-      gap: 30px;
+      gap: 40px;
     }
 
     @media (max-width: 568px) {
@@ -29,47 +32,60 @@
   .brand-col {
     .logo {
       display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 15px;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: 20px;
 
-      .logo-icon {
-        font-size: 1.8rem;
-      }
+      .logo-icon { display: none; }
 
       .logo-text {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: #fff;
+        font-family: var(--font-display);
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--paper);
+        font-style: italic;
+        letter-spacing: -0.02em;
+
+        &::after {
+          content: '.';
+          color: var(--cinnabar);
+        }
       }
     }
 
     p {
-      max-width: 350px;
-      line-height: 1.7;
+      max-width: 360px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--stone);
     }
   }
 
   .col {
     h4 {
-      color: #fff;
-      font-size: 1.1rem;
-      margin-bottom: 18px;
+      font-family: var(--font-mono);
+      color: var(--paper);
+      font-size: 0.72rem;
       font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
     }
 
     ul {
       list-style: none;
 
       li {
-        margin-bottom: 10px;
+        margin-bottom: 12px;
+        font-size: 0.92rem;
 
         a {
-          color: #94a3b8;
+          color: var(--stone-light);
           transition: color 0.2s;
 
           &:hover {
-            color: #fff;
+            color: var(--cinnabar);
           }
         }
       }
@@ -77,10 +93,11 @@
   }
 
   .copyright {
-    border-top: 1px solid #334155;
-    padding-top: 25px;
-    text-align: center;
-    font-size: 0.9rem;
-    color: #64748b;
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--stone);
+    text-transform: uppercase;
   }
 }
