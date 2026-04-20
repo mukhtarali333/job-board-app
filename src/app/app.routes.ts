@@ -10,7 +10,17 @@ export const routes: Routes = [
                 path: '',
                 loadComponent: () =>
                     import('./features/home/home').then(m => m.Home),
-            }
+            },
+            {
+                path: 'jobs/:id',
+                loadComponent: () =>
+                    import('./features/jobs/jobs-detail/jobs-detail').then(m => m.JobsDetail),
+            },
+            {
+                path: 'jobs',
+                loadComponent: () =>
+                    import('./features/jobs/jobs-list/jobs-list').then(m => m.JobsList),
+            },
         ]
     },
     {

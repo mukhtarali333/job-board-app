@@ -18,6 +18,21 @@ export class JobService {
     );
   }
 
+  getJobById(id: number):Observable<Job | undefined> {
+    return this.getJobs().pipe(
+      map(jobs => jobs.find(j => j.id === id))
+    );
+  }
+
+  getSimilarJobs(category: string, excludeId: number, limit: number = 4):Observable<Job[]> {
+    return this.getJobs().pipe(
+      map(jobs => jobs
+        .filter(j => j.category === category && j.id !== excludeId)
+        .slice(0, limit)
+      )
+    )
+  }
+
   getFeaturedJobs(limit: number = 6):Observable<Job[]> {
     return this.http.get<JobResponse>(this.apiUrl).pipe(
       map(response => response.jobs.slice(0,limit))

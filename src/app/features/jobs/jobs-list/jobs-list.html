@@ -1,0 +1,120 @@
+<!-- PAGE HEADER -->
+<section class="page-header">
+    <div class="container">
+      <h1>Find your next opportunity</h1>
+      <p class="muted">{{ filteredJobs().length }} jobs available</p>
+  
+      <form class="search-box" (ngSubmit)="onFilterChange()">
+        <div class="input-group">
+          <span class="icon">🔍</span>
+          <input type="text" placeholder="Job title or keywords"
+                 [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event); onFilterChange()" name="q">
+        </div>
+        <div class="input-group divider">
+          <span class="icon">📍</span>
+          <input type="text" placeholder="Location"
+                 [ngModel]="locationTerm()" (ngModelChange)="locationTerm.set($event); onFilterChange()" name="loc">
+        </div>
+        <button type="submit" class="btn-primary">Search</button>
+      </form>
+    </div>
+  </section>
+  
+  <!-- MAIN CONTENT -->
+  <section class="content">
+    <div class="container layout">
+  
+      <!-- SIDEBAR FILTERS -->
+      <aside class="filters">
+        <div class="filter-head">
+          <h3>Filters</h3>
+          <button class="clear" (click)="clearFilters()">Clear all</button>
+        </div>
+  
+        <div class="filter-group">
+          <h4>Category</h4>
+          <label class="radio">
+            <input type="radio" name="category" value=""
+                   [checked]="selectedCategory() === ''"
+                   (change)="selectedCategory.set(''); onFilterChange()">
+            <span>All Categories</span>
+          </label>
+          @for (cat of categories; track cat.slug) {
+            <label class="radio">
+              <input type="radio" name="category" [value]="cat.slug"
+                     [checked]="selectedCategory() === cat.slug"
+                     (change)="selectedCategory.set(cat.slug); onFilterChange()">
+              <span>{{ cat.icon }} {{ cat.name }}</span>
+            </label>
+          }
+        </div>
+  
+        <div class="filter-group">
+          <h4>Job Type</h4>
+          <label class="radio">
+            <input type="radio" name="jobType" value=""
+                   [checked]="selectedJobType() === ''"
+                   (change)="selectedJobType.set(''); onFilterChange()">
+            <span>All Types</span>
+          </label>
+          @for (type of jobTypes; track type) {
+            <label class="radio">
+              <input type="radio" name="jobType" [value]="type"
+                     [checked]="selectedJobType() === type"
+                     (change)="selectedJobType.set(type); onFilterChange()">
+              <span>{{ formatJobType(type) }}</span>
+            </label>
+          }
+        </div>
+      </aside>
+  
+      <!-- JOBS LIST -->
+      <div class="jobs-area">
+        @if (isLoading()) {
+          <div class="state">Loading jobs...</div>
+        } @else if (hasError()) {
+          <div class="state error">Failed to load jobs. Please try again.</div>
+        } @else if (filteredJobs().length === 0) {
+          <div class="state">
+            <h3>No jobs found</h3>
+            <p class="muted">Try adjusting your filters</p>
+            <button class="btn-primary" (click)="clearFilters()">Clear filters</button>
+          </div>
+        } @else {
+          <div class="jobs-list">
+            @for (job of paginatedJobs(); track job.id) {
+              <article class="job-card" (click)="onJobClick(job.id)">
+                <div class="company-logo">{{ job.company_name.charAt(0) }}</div>
+                <div class="job-body">
+                  <h4>{{ job.title }}</h4>
+                  <p class="company">by <strong>{{ job.company_name }}</strong> in {{ job.category }}</p>
+                  <div class="job-meta">
+                    <span class="tag">{{ formatJobType(job.job_type) }}</span>
+                    <span>📍 {{ job.candidate_required_location }}</span>
+                    @if (job.salary) { <span>💰 {{ job.salary }}</span> }
+                    <span class="posted">🕒 {{ formatDate(job.publication_date) }}</span>
+                  </div>
+                </div>
+                <span class="heart">♡</span>
+              </article>
+            }
+          </div>
+  
+          <!-- PAGINATION -->
+          @if (totalPages() > 1) {
+            <div class="pagination">
+              <button (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() === 1">
+                ← Prev
+              </button>
+              <span class="page-info">Page {{ currentPage() }} of {{ totalPages() }}</span>
+              <button (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() === totalPages()">
+                Next →
+              </button>
+            </div>
+          }
+        }
+      </div>
+  
+    </div>
+  </section>
+  

@@ -1,0 +1,122 @@
+@if (isLoading()) {
+    <div class="container state">Loading job details...</div>
+  }
+  @else if (hasError()) {
+    <div class="container state error">
+      <h2>Something went wrong</h2>
+      <p class="muted">Failed to load job details. Please try again.</p>
+      <button class="btn-primary" (click)="goBack()">Back to jobs</button>
+    </div>
+  }
+  @else if (notFound()) {
+    <div class="container state">
+      <h2>Job not found</h2>
+      <p class="muted">This job may have been removed or the link is broken.</p>
+      <button class="btn-primary" (click)="goBack()">Back to jobs</button>
+    </div>
+  }
+  @else if (job(); as j) {
+    <!-- BACK -->
+    <div class="container back-row">
+      <button class="back-btn" (click)="goBack()">← Back to jobs</button>
+    </div>
+  
+    <!-- HEADER CARD -->
+    <section class="container">
+      <div class="job-header">
+        <div class="company-logo">{{ j.company_name.charAt(0) }}</div>
+        <div class="header-info">
+          <h1>{{ j.title }}</h1>
+          <p class="company">at <strong>{{ j.company_name }}</strong></p>
+          <div class="meta">
+            <span class="tag">{{ formatJobType(j.job_type) }}</span>
+            <span>📍 {{ j.candidate_required_location }}</span>
+            <span>🏷️ {{ j.category }}</span>
+            <span>🕒 Posted {{ formatDate(j.publication_date) }}</span>
+          </div>
+        </div>
+        <div class="header-cta">
+          <a [href]="j.url" target="_blank" rel="noopener" class="btn-primary large">Apply Now</a>
+          <button class="btn-outline">♡ Save</button>
+        </div>
+      </div>
+    </section>
+  
+    <!-- BODY LAYOUT -->
+    <section class="container body-layout">
+      <!-- DESCRIPTION -->
+      <article class="description-card">
+        <h3>Job description</h3>
+        <div class="description" [innerHTML]="j.description"></div>
+  
+        @if (j.tags && j.tags.length > 0) {
+          <div class="tags-row">
+            <h4>Skills required</h4>
+            <div class="tags">
+              @for (tag of j.tags; track tag) {
+                <span class="skill-tag">{{ tag }}</span>
+              }
+            </div>
+          </div>
+        }
+  
+        <div class="apply-bottom">
+          <a [href]="j.url" target="_blank" rel="noopener" class="btn-primary large">Apply Now</a>
+          <p class="muted small">You will be redirected to {{ j.company_name }}'s application page.</p>
+        </div>
+      </article>
+  
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="info-card">
+          <h4>Job overview</h4>
+          <ul class="info-list">
+            <li><span>💼 Job Type</span><strong>{{ formatJobType(j.job_type) }}</strong></li>
+            <li><span>📍 Location</span><strong>{{ j.candidate_required_location }}</strong></li>
+            <li><span>🏷️ Category</span><strong>{{ j.category }}</strong></li>
+            @if (j.salary) {
+              <li><span>💰 Salary</span><strong>{{ j.salary }}</strong></li>
+            }
+            <li><span>🕒 Posted</span><strong>{{ formatDate(j.publication_date) }}</strong></li>
+          </ul>
+        </div>
+  
+        <div class="info-card">
+          <h4>About company</h4>
+          <div class="company-block">
+            <div class="company-logo small">{{ j.company_name.charAt(0) }}</div>
+            <div>
+              <strong>{{ j.company_name }}</strong>
+              <p class="muted small">{{ j.category }}</p>
+            </div>
+          </div>
+          @if (j.company_logo) {
+            <img [src]="j.company_logo" [alt]="j.company_name" class="company-img">
+          }
+        </div>
+      </aside>
+    </section>
+  
+    <!-- SIMILAR JOBS -->
+    @if (similarJobs().length > 0) {
+      <section class="container similar-section">
+        <h3>Similar jobs</h3>
+        <div class="similar-grid">
+          @for (sim of similarJobs(); track sim.id) {
+            <article class="job-card" (click)="onSimilarClick(sim.id)">
+              <div class="company-logo">{{ sim.company_name.charAt(0) }}</div>
+              <div class="job-body">
+                <h4>{{ sim.title }}</h4>
+                <p class="muted small">by {{ sim.company_name }}</p>
+                <div class="job-meta">
+                  <span class="tag">{{ formatJobType(sim.job_type) }}</span>
+                  <span>📍 {{ sim.candidate_required_location }}</span>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+    }
+  }
+  
