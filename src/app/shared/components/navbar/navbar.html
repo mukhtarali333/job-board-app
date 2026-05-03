@@ -21,8 +21,32 @@
     </ul>
 
     <div class="nav-cta">
-      <a routerLink="/login" class="login">Login</a>
-      <a routerLink="/post-job" class="btn-primary">Post a job</a>
+      @if (currentUser(); as user) {
+        <!-- LOGGED IN -->
+        <div class="user-menu">
+          <button class="user-btn" (click)="toggleDropdown()">
+            <span class="avatar">{{ getInitial() }}</span>
+            <span class="user-name">{{ user.displayName || user.email }}</span>
+            <span class="chevron">▾</span>
+          </button>
+
+          @if (isDropdownOpen()) {
+            <div class="dropdown">
+              <div class="dropdown-head">
+                <strong>{{ user.displayName || 'User' }}</strong>
+                <p class="muted small">{{ user.email }}</p>
+              </div>
+              <a routerLink="/profile" (click)="closeDropdown()">👤 Profile</a>
+              <a routerLink="/saved-jobs" (click)="closeDropdown()">♡ Saved jobs</a>
+              <button class="logout-btn" (click)="logout()">🚪 Logout</button>
+            </div>
+          }
+        </div>
+      } @else {
+        <!-- LOGGED OUT -->
+        <a routerLink="/login" class="login">Login</a>
+        <a routerLink="/register" class="btn-primary">Get Started</a>
+      }
     </div>
 
     <button class="mobile-toggle" (click)="toggleMenu()">☰</button>
