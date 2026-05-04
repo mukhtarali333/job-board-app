@@ -37,7 +37,9 @@
         </div>
         <div class="header-cta">
           <a [href]="j.url" target="_blank" rel="noopener" class="btn-primary large">Apply Now</a>
-          <button class="btn-outline">♡ Save</button>
+          <button class="btn-outline" [class.saved]="savedJobsService.isSaved(j.id)" (click)="savedJobsService.toggle(j.id)">
+            {{ savedJobsService.isSaved(j.id) ? '♥ Saved' : '♡ Save' }}
+          </button>
         </div>
       </div>
     </section>

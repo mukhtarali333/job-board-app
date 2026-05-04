@@ -181,3 +181,16 @@ h1, h3, h4 { color: var(--text); font-weight: 700; line-height: 1.2; }
   }
   .page-info { font-size: 14px; color: var(--text-muted); }
 }
+
+.heart-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  &:hover { color: #E11D48; transform: scale(1.2); }
+  &.saved { color: #E11D48; }
+}

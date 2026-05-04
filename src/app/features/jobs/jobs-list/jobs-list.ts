@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Job } from '../../../core/models/job.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SavedJobsService } from '../../../core/services/saved-jobs-service';
 
 @Component({
   selector: 'app-jobs-list',
@@ -15,6 +16,8 @@ export class JobsList {
   private jobService = inject(JobService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+
+  savedJobsService = inject(SavedJobsService)
 
   allJobs = signal<Job[]>([]);
   isLoading = signal<boolean>(true);

@@ -1,0 +1,37 @@
+<div class="container page">
+  <div class="page-head">
+    <h1>Saved Jobs</h1>
+    <p class="muted">{{ savedJobsService.savedCount() }} jobs saved</p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="state">Loading...</div>
+  } @else if (savedJobs().length === 0) {
+    <div class="state empty">
+      <div class="empty-icon">♡</div>
+      <h3>No saved jobs yet</h3>
+      <p class="muted">Browse jobs and click the heart icon to save them here.</p>
+      <a routerLink="/jobs" class="btn-primary">Browse Jobs</a>
+    </div>
+  } @else {
+    <div class="jobs-list">
+      @for (job of savedJobs(); track job.id) {
+        <article class="job-card" (click)="onJobClick(job.id)">
+          <div class="company-logo">{{ job.company_name.charAt(0) }}</div>
+          <div class="job-body">
+            <h4>{{ job.title }}</h4>
+            <p class="muted">by {{ job.company_name }}</p>
+            <div class="job-meta">
+              <span class="tag">{{ formatJobType(job.job_type) }}</span>
+              <span>📍 {{ job.candidate_required_location }}</span>
+            </div>
+          </div>
+          <button class="unsave-btn"
+                  (click)="$event.stopPropagation(); savedJobsService.toggle(job.id)">
+            ♥ Unsave
+          </button>
+        </article>
+      }
+    </div>
+  }
+</div>

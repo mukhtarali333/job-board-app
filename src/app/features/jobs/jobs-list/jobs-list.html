@@ -83,20 +83,23 @@
         } @else {
           <div class="jobs-list">
             @for (job of paginatedJobs(); track job.id) {
-              <article class="job-card" (click)="onJobClick(job.id)">
-                <div class="company-logo">{{ job.company_name.charAt(0) }}</div>
-                <div class="job-body">
-                  <h4>{{ job.title }}</h4>
-                  <p class="company">by <strong>{{ job.company_name }}</strong> in {{ job.category }}</p>
-                  <div class="job-meta">
-                    <span class="tag">{{ formatJobType(job.job_type) }}</span>
-                    <span>📍 {{ job.candidate_required_location }}</span>
-                    @if (job.salary) { <span>💰 {{ job.salary }}</span> }
-                    <span class="posted">🕒 {{ formatDate(job.publication_date) }}</span>
-                  </div>
+            <article class="job-card" (click)="onJobClick(job.id)">
+              <div class="company-logo">{{ job.company_name.charAt(0) }}</div>
+              <div class="job-body">
+                <h4>{{ job.title }}</h4>
+                <p class="company">by <strong>{{ job.company_name }}</strong> in {{ job.category }}</p>
+                <div class="job-meta">
+                  <span class="tag">{{ formatJobType(job.job_type) }}</span>
+                  <span>📍 {{ job.candidate_required_location }}</span>
+                  @if (job.salary) { <span>💰 {{ job.salary }}</span> }
+                  <span class="posted">🕒 {{ formatDate(job.publication_date) }}</span>
                 </div>
-                <span class="heart">♡</span>
-              </article>
+              </div>
+              <button class="heart-btn" [class.saved]="savedJobsService.isSaved(job.id)"
+                (click)="$event.stopPropagation(); savedJobsService.toggle(job.id)">
+                {{ savedJobsService.isSaved(job.id) ? '♥' : '♡' }}
+              </button>
+            </article>
             }
           </div>
   

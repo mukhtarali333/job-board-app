@@ -3,6 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { JobService } from '../../../core/services/jobService';
 import { Job } from '../../../core/models/job.model';
+import { SavedJobsService } from '../../../core/services/saved-jobs-service';
 
 @Component({
   selector: 'app-jobs-detail',
@@ -14,6 +15,8 @@ export class JobsDetail {
   private jobService = inject(JobService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+
+  savedJobsService = inject(SavedJobsService);
 
   job = signal<Job | null>(null);
   similarJobs = signal<Job[]>([]);
