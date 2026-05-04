@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Auth, user } from '@angular/fire/auth';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, User } from 'firebase/auth';
+import { createUserWithEmailAndPassword, EmailAuthProvider, reauthenticateWithCredential, signInWithEmailAndPassword, signOut, updatePassword, updateProfile, User } from 'firebase/auth';
 import { from, Observable } from 'rxjs';
 import { AppUser } from '../models/user.model';
 
@@ -15,7 +15,7 @@ export class AuthService {
 
   user$: Observable<User | null> = user(this.auth);
 
-  constructor() {debugger
+  constructor() {
     this.user$.subscribe(fireBaseUser => {
       console.log("auth service constructor")
       if(fireBaseUser) {
@@ -43,7 +43,7 @@ export class AuthService {
     )
   }
 
-  login(email: string, password: string) {debugger
+  login(email: string, password: string) {
     return from(signInWithEmailAndPassword(this.auth,email,password));
   }
 
@@ -53,6 +53,27 @@ export class AuthService {
 
   isLoggedIn():boolean {
     return this.auth.currentUser !== null;
+  }
+
+  updateDisplayName(displayName: string) {
+    return from(
+      updateProfile(this.auth.currentUser!, {displayName}).then(() => {
+        this.currentUser.update(u => u ? {...u, displayName}: null);
+      })
+    )
+  }
+
+  changePassword(currentPassword: string, newPassword: string) {
+    const firebaseUser = this.auth.currentUser!;
+    const credential = EmailAuthProvider.credential(
+      firebaseUser.email!,
+      currentPassword
+    );
+
+    return from(
+      reauthenticateWithCredential(firebaseUser, credential)
+      .then(() => updatePassword(firebaseUser, newPassword))
+    )
   }
 
 }
