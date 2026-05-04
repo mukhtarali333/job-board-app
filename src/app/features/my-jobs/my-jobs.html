@@ -1,0 +1,44 @@
+<div class="my-jobs-container">
+  <div class="page-header">
+    <h1>My Posted Jobs</h1>
+    <a routerLink="/post-job" class="btn-post">+ Post a Job</a>
+  </div>
+
+  @if (isLoading()) {
+    <p class="state-msg">Loading your jobs...</p>
+  } @else if (jobs().length === 0) {
+    <div class="empty-state">
+      <p>You haven't posted any jobs yet.</p>
+      <a routerLink="/post-job" class="btn-post">Post your first job</a>
+    </div>
+  } @else {
+    <div class="jobs-list">
+      @for (job of jobs(); track job.id) {
+        <div class="job-card">
+          <div class="job-info">
+            <h2>{{ job.title }}</h2>
+            <p class="company">{{ job.company }}</p>
+            <div class="meta">
+              <span>{{ job.location }}</span>
+              <span class="dot">·</span>
+              <span>{{ job.type }}</span>
+              @if (job.salary) {
+                <span class="dot">·</span>
+                <span>{{ job.salary }}</span>
+              }
+            </div>
+          </div>
+          <div class="job-actions">
+            <a [routerLink]="['/edit-job', job.id]" class="btn-edit">Edit</a>
+            <button
+              class="btn-delete"
+              [disabled]="deletingId() === job.id"
+              (click)="deleteJob(job.id!, $event)">
+              {{ deletingId() === job.id ? 'Deleting...' : 'Delete' }}
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -22,6 +22,10 @@
 
     <div class="nav-cta">
       @if (currentUser(); as user) {
+        @if (currentUser()) {
+          <a routerLink="/post-job" class="btn-post-job">Post a Job</a>
+        }
+
         <!-- LOGGED IN -->
         <div class="user-menu">
           <button class="user-btn" (click)="toggleDropdown()">
@@ -38,6 +42,8 @@
               </div>
               <a routerLink="/profile" (click)="closeDropdown()">👤 Profile</a>
               <a routerLink="/saved-jobs" (click)="closeDropdown()">♡ Saved jobs</a>
+              <a routerLink="/my-jobs" (click)="closeDropdown()">📋 My Jobs</a>
+
               <button class="logout-btn" (click)="logout()">🚪 Logout</button>
             </div>
           }

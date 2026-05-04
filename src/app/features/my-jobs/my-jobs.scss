@@ -1,0 +1,133 @@
+.my-jobs-container {
+  max-width: 800px;
+  margin: 48px auto;
+  padding: 0 16px;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+}
+
+.btn-post {
+  padding: 10px 20px;
+  background: var(--primary);
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+
+  &:hover {
+    background: var(--primary-hover);
+  }
+}
+
+.state-msg {
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 48px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 64px 0;
+  color: var(--text-muted);
+
+  p {
+    margin-bottom: 16px;
+    font-size: 1rem;
+  }
+}
+
+.jobs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.job-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  gap: 16px;
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .company {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .meta {
+    display: flex;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+
+    .dot {
+      color: var(--border);
+    }
+  }
+}
+
+.job-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btn-edit {
+  padding: 8px 16px;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+
+  &:hover {
+    background: var(--primary-soft);
+  }
+}
+
+.btn-delete {
+  padding: 8px 16px;
+  border: 1px solid #fca5a5;
+  color: #dc2626;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    background: #fef2f2;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

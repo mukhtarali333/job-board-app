@@ -42,6 +42,24 @@ export const routes: Routes = [
                 path: 'saved-jobs',
                 loadComponent: () =>
                     import('./features/saved-jobs/saved-jobs').then(m => m.SavedJobs)
+            },
+            {
+                path: 'post-job',
+                canActivate: [authGuard],
+                loadComponent: () => 
+                    import('./features/post-job/post-job').then(m => m.PostJob)
+            },
+            {
+                path: 'my-jobs',
+                canActivate: [authGuard],
+                loadComponent: () => 
+                    import('./features/my-jobs/my-jobs').then(m => m.MyJobs)
+            },
+            {
+                path: 'edit-job/:id',
+                canActivate: [authGuard],
+                loadComponent: () =>
+                    import('./features/post-job/post-job').then(m => m.PostJob)
             }
         ]
     },
