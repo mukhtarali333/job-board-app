@@ -29,7 +29,10 @@
             </div>
           </div>
           <div class="job-actions">
-            <a [routerLink]="['/edit-job', job.id]" class="btn-edit">Edit</a>
+            <button class="btn-edit" (click)="editJob(job, $event)">
+              Edit
+            </button>
+
             <button
               class="btn-delete"
               [disabled]="deletingId() === job.id"

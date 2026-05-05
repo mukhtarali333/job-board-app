@@ -43,18 +43,22 @@ export class PostJob implements OnInit {
     if(id){
       this.isEditMode.set(true);
       this.jobId.set(id);
-      this.isLoading.set(true);
+      
+      const state = this.router.currentNavigation()?.extras.state?.['jobs'];
+
+      if(state) {
+        this.jobForm.patchValue(state);
+      }
+      else{
+        this.isLoading.set(true);
+
+      }
+      
 
       this.jobPostService.getJobById(id).subscribe({
         next: (job) => {
-          this.jobForm.patchValue({
-            title: job.title,
-            company: job.company,
-            location: job.location,
-            type: job.type,
-            salary: job.salary,
-            description: job.description,
-          });
+          this.jobForm.patchValue(job);
+          this.isLoading.set(false);
         },
         error: (err) => {
           console.log(err);

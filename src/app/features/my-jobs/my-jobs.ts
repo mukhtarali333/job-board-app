@@ -1,6 +1,6 @@
 import { Component, inject, Inject, OnInit, signal } from '@angular/core';
 import { PostedJob } from '../../core/models/posted-job.model';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '../../core/services/auth-service';
 import { JobPostService } from '../../core/services/job-post-service';
 
@@ -14,6 +14,7 @@ export class MyJobs implements OnInit {
 
   private authService = inject(AuthService);
   private jobPostService = inject(JobPostService);
+  private router = inject(Router)
 
   isLoading = signal(true);
   jobs = signal<PostedJob[]>([]);
@@ -51,5 +52,10 @@ export class MyJobs implements OnInit {
         this.deletingId.set(null);
       }
     });
+  }
+
+  editJob(job: PostedJob, event: Event) {
+    event.stopPropagation();
+    this.router.navigate(['/edit-job', job.id], { state: { job } });
   }
 }
